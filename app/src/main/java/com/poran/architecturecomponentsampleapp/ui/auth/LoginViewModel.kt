@@ -2,6 +2,8 @@ package com.poran.architecturecomponentsampleapp.ui.auth
 
 import android.view.View
 import androidx.lifecycle.ViewModel
+import com.poran.architecturecomponentsampleapp.data.repository.UserRepository
+import com.poran.architecturecomponentsampleapp.utils.Coroutines
 
 class LoginViewModel :ViewModel() {
     var email:String?=null
@@ -11,14 +13,24 @@ class LoginViewModel :ViewModel() {
     fun onLoginButtonClick(view:View){
         authListener?.onStarted()
         if(email.isNullOrEmpty()||password.isNullOrEmpty()){
-            authListener?.onFailure("Wrong password")
+            authListener?.onFailure("Invalid email or password")
             return
         }
-        authListener?.onSuccess()
+        Coroutines.main {
+            val response=UserRepository().userLogin(email!!,password!!)
+            if (response.isSuccessful){
+                authListener?.onSuccess(response.body()?.user!!)
+            }else{
+                authListener?.onFailure(response.body()?.message!!)
+            }
+
+        }
 
     }
 
     fun onForgetPassword(view:View){
+        authListener?.onForgot("forgot password")
+
 
     }
 }

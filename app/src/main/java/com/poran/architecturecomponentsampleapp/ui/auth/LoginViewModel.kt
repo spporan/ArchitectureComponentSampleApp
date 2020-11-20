@@ -3,6 +3,7 @@ package com.poran.architecturecomponentsampleapp.ui.auth
 import android.view.View
 import androidx.lifecycle.ViewModel
 import com.poran.architecturecomponentsampleapp.data.repository.UserRepository
+import com.poran.architecturecomponentsampleapp.utils.ApiException
 import com.poran.architecturecomponentsampleapp.utils.Coroutines
 
 class LoginViewModel :ViewModel() {
@@ -17,12 +18,19 @@ class LoginViewModel :ViewModel() {
             return
         }
         Coroutines.main {
-            val response=UserRepository().userLogin(email!!,password!!)
-            if (response.isSuccessful){
-                authListener?.onSuccess(response.body()?.user!!)
-            }else{
-                authListener?.onFailure(response.body()?.message!!)
+            try {
+                val response=UserRepository().userLogin(email!!,password!!)
+                response.user?.let {
+                    authListener?.onSuccess(response.user)
+                    return@main
+                }
+                authListener?.onFailure(response.message!!)
+
+            }catch (e:ApiException){
+                authListener?.onFailure(e.message!!)
+
             }
+
 
         }
 

@@ -2,14 +2,20 @@ package com.poran.architecturecomponentsampleapp.ui.auth
 
 import android.view.View
 import androidx.lifecycle.ViewModel
+import com.poran.architecturecomponentsampleapp.data.api.ApiService
 import com.poran.architecturecomponentsampleapp.data.repository.UserRepository
 import com.poran.architecturecomponentsampleapp.utils.ApiException
 import com.poran.architecturecomponentsampleapp.utils.Coroutines
 
-class LoginViewModel :ViewModel() {
+class LoginViewModel(
+        private val repository: UserRepository
+) :ViewModel() {
     var email:String?=null
     var password:String?=null
-    var authListener:AuthListener?=null;
+    var authListener:AuthListener?=null
+
+    fun getLoggedInUser()= repository.getUser()
+
 
     fun onLoginButtonClick(view:View){
         authListener?.onStarted()
@@ -19,9 +25,10 @@ class LoginViewModel :ViewModel() {
         }
         Coroutines.main {
             try {
-                val response=UserRepository().userLogin(email!!,password!!)
+                val response=repository.userLogin(email!!,password!!)
                 response.user?.let {
-                    authListener?.onSuccess(response.user)
+                    authListener?.onSuccess(it)
+                    repository.saveUser(it)
                     return@main
                 }
                 authListener?.onFailure(response.message!!)

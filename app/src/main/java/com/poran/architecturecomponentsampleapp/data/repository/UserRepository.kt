@@ -17,7 +17,7 @@ class UserRepository (
 ): SafeApiRequest(){
 
   suspend  fun userLogin(email:String,password:String):AuthResponse{
-      return  apiRequest { ApiService().userLogin(email,password) }
+      return  apiRequest {apiService.userLogin(email,password) }
 
     }
 

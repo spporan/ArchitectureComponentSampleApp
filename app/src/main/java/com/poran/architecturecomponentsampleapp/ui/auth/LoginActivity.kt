@@ -1,39 +1,35 @@
 package com.poran.architecturecomponentsampleapp.ui.auth
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ProgressBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.poran.architecturecomponentsampleapp.R
-import com.poran.architecturecomponentsampleapp.data.api.ApiService
-import com.poran.architecturecomponentsampleapp.data.db.AppDatabase
 import com.poran.architecturecomponentsampleapp.data.db.entities.User
-import com.poran.architecturecomponentsampleapp.data.repository.UserRepository
 import com.poran.architecturecomponentsampleapp.databinding.ActivityLoginBinding
 import com.poran.architecturecomponentsampleapp.ui.home.HomeActivity
 import com.poran.architecturecomponentsampleapp.utils.hide
 import com.poran.architecturecomponentsampleapp.utils.show
 import com.poran.architecturecomponentsampleapp.utils.toast
 import kotlinx.android.synthetic.main.activity_login.*
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.closestKodein
+import org.kodein.di.generic.instance
 
 
-class LoginActivity : AppCompatActivity(),AuthListener {
+class LoginActivity : AppCompatActivity(),AuthListener,KodeinAware {
     lateinit var viewModel: LoginViewModel
-    lateinit var  repository:UserRepository
+    override val kodein by closestKodein()
+    private val factory: LoginViewModelFactory by instance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val api=ApiService()
-        val appDatabase=AppDatabase(this)
-        repository=UserRepository(api,appDatabase)
 
         val binding:ActivityLoginBinding=DataBindingUtil.setContentView(this,R.layout.activity_login)
          viewModel=createViewModel()
         binding.viewModel=viewModel
-
         viewModel.authListener=this
 
         viewModel.getLoggedInUser().observe(this, Observer { user->
@@ -48,7 +44,7 @@ class LoginActivity : AppCompatActivity(),AuthListener {
 
     }
 
-    private fun createViewModel()=ViewModelProviders.of(this,LoginViewModelFactory(repository)).get(LoginViewModel::class.java)
+    private fun createViewModel()=ViewModelProviders.of(this,factory).get(LoginViewModel::class.java)
 
 
     override fun onStarted() {
@@ -72,6 +68,8 @@ class LoginActivity : AppCompatActivity(),AuthListener {
     override fun onForgot(msg: String) {
         toast(msg)
     }
+
+
 
 
 }

@@ -1,6 +1,7 @@
 package com.poran.architecturecomponentsampleapp.data.api
 
 import com.poran.architecturecomponentsampleapp.utils.ApiException
+import com.poran.architecturecomponentsampleapp.utils.NoNetworkException
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Response
@@ -18,6 +19,9 @@ abstract class SafeApiRequest {
                 try {
                     errorMsg.append(JSONObject(it).getString("message"))
                 }catch (e:JSONException){}
+                catch (e:NoNetworkException){
+
+                }
                 finally {
                     errorMsg.append("\n")
                     errorMsg.append("Error code ${response.code()}")

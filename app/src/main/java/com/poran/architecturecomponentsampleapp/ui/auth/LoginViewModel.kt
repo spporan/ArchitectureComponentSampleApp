@@ -6,6 +6,7 @@ import com.poran.architecturecomponentsampleapp.data.api.ApiService
 import com.poran.architecturecomponentsampleapp.data.repository.UserRepository
 import com.poran.architecturecomponentsampleapp.utils.ApiException
 import com.poran.architecturecomponentsampleapp.utils.Coroutines
+import com.poran.architecturecomponentsampleapp.utils.NoNetworkException
 
 class LoginViewModel(
         private val repository: UserRepository
@@ -36,6 +37,9 @@ class LoginViewModel(
             }catch (e:ApiException){
                 authListener?.onFailure(e.message!!)
 
+            }
+            catch (e:NoNetworkException){
+                authListener?.onFailure(e.message!!)
             }
 
 

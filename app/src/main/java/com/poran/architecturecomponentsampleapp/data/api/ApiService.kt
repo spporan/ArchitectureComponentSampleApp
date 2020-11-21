@@ -1,6 +1,7 @@
 package com.poran.architecturecomponentsampleapp.data.api
 
 import com.poran.architecturecomponentsampleapp.data.api.respones.AuthResponse
+import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
@@ -19,11 +20,19 @@ interface ApiService {
     ):Response<AuthResponse>
 
     companion object{
-         operator fun invoke():ApiService{
+         operator fun invoke(
+               interceptor: NetworkConnectionInterceptor
+         ):ApiService{
+             val okHttpClient=OkHttpClient
+                 .Builder()
+                 .addInterceptor(interceptor)
+                 .build()
+
             return Retrofit
                 .Builder()
                 .baseUrl("https://api.simplifiedcoding.in/course-apis/mvvm/")
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
                 .build()
                 .create(ApiService::class.java)
         }

@@ -6,9 +6,9 @@ import com.poran.architecturecomponentsampleapp.data.repository.UserRepository
 import java.lang.IllegalArgumentException
 
 @Suppress("UNCHECKED_CAST")
-class LoginViewModelFactory(private val repository: UserRepository) :ViewModelProvider.Factory {
+class AuthViewModelFactory(private val repository: UserRepository) :ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if(modelClass.isAssignableFrom(LoginViewModel::class.java)) return LoginViewModel(repository) as T
+        if(modelClass.isAssignableFrom(AuthViewModel::class.java)) return AuthViewModel(repository) as T
         throw IllegalArgumentException()
     }
 }

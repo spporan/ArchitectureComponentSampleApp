@@ -1,12 +1,11 @@
 package com.poran.architecturecomponentsampleapp
 
 import android.app.Application
-import android.content.Context
 import com.poran.architecturecomponentsampleapp.data.api.ApiService
 import com.poran.architecturecomponentsampleapp.data.api.NetworkConnectionInterceptor
 import com.poran.architecturecomponentsampleapp.data.db.AppDatabase
 import com.poran.architecturecomponentsampleapp.data.repository.UserRepository
-import com.poran.architecturecomponentsampleapp.ui.auth.LoginViewModelFactory
+import com.poran.architecturecomponentsampleapp.ui.auth.AuthViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -33,7 +32,7 @@ class MVVMApplication :Application(),KodeinAware {
             UserRepository(instance(),instance())
         }
         bind() from provider {
-            LoginViewModelFactory(instance())
+            AuthViewModelFactory(instance())
         }
     }
 }

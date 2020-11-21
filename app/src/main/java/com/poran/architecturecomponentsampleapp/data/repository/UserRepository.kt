@@ -21,6 +21,13 @@ class UserRepository (
 
     }
 
+    suspend fun userSignUp(name:String,email: String,password: String):AuthResponse{
+        return apiRequest {
+            apiService.userSignUp(name,email,password)
+        }
+
+    }
+
     suspend fun saveUser(user:User){
         appDatabase.userDao().insert(user)
     }

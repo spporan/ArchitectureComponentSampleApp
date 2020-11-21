@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.poran.architecturecomponentsampleapp.ui.auth.LoginViewModel" />
+            type="com.poran.architecturecomponentsampleapp.ui.auth.AuthViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -94,6 +94,20 @@
             app:layout_constraintTop_toTopOf="parent">
 
         </ProgressBar>
+
+        <TextView
+            android:id="@+id/gotoSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:onClick="@{viewModel::gotoSignUp}"
+            android:text="Don't have any account?\nPlease Sign Up"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

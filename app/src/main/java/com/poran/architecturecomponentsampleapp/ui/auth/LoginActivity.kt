@@ -20,9 +20,9 @@ import org.kodein.di.generic.instance
 
 
 class LoginActivity : AppCompatActivity(),AuthListener,KodeinAware {
-    lateinit var viewModel: LoginViewModel
+    lateinit var viewModel: AuthViewModel
     override val kodein by closestKodein()
-    private val factory: LoginViewModelFactory by instance()
+    private val factory: AuthViewModelFactory by instance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +44,7 @@ class LoginActivity : AppCompatActivity(),AuthListener,KodeinAware {
 
     }
 
-    private fun createViewModel()=ViewModelProviders.of(this,factory).get(LoginViewModel::class.java)
+    private fun createViewModel()=ViewModelProviders.of(this,factory).get(AuthViewModel::class.java)
 
 
     override fun onStarted() {

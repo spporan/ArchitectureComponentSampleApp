@@ -6,6 +6,7 @@ import com.poran.architecturecomponentsampleapp.data.api.NetworkConnectionInterc
 import com.poran.architecturecomponentsampleapp.data.db.AppDatabase
 import com.poran.architecturecomponentsampleapp.data.repository.UserRepository
 import com.poran.architecturecomponentsampleapp.ui.auth.AuthViewModelFactory
+import com.poran.architecturecomponentsampleapp.ui.home.profile.ProfileViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -33,6 +34,9 @@ class MVVMApplication :Application(),KodeinAware {
         }
         bind() from provider {
             AuthViewModelFactory(instance())
+        }
+        bind() from provider {
+            ProfileViewModelFactory(instance())
         }
     }
 }

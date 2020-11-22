@@ -1,13 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.home.profile.ProfileFragment">
+    >
+    <data>
+        <variable
+            name="profileViewModel"
+            type="com.poran.architecturecomponentsampleapp.ui.home.profile.ProfileViewModel" />
+    </data>
+    <FrameLayout
 
-    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        tools:context=".ui.home.profile.ProfileFragment">
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/nameView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Md. Shah Paran"
+                android:text="@={profileViewModel.user.name}"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:text="Welecome"
+                android:textColor="#7C1E40"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/nameView"
+                app:layout_constraintEnd_toEndOf="@+id/nameView"
+                app:layout_constraintStart_toStartOf="@+id/nameView" />
+
+            <TextView
+                android:id="@+id/emailView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@={profileViewModel.user.email}"
+                tools:text="paran@gmail.com"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nameView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+</layout>
+

@@ -14,7 +14,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
 
-class ProfileFragment : Fragment() ,KodeinAware{
+class ProfileFragment : Fragment(),KodeinAware{
 
     override val kodein by closestKodein()
     private val factory:ProfileViewModelFactory by instance()

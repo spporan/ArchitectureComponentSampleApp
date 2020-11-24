@@ -4,9 +4,11 @@ import android.app.Application
 import com.poran.architecturecomponentsampleapp.data.api.ApiService
 import com.poran.architecturecomponentsampleapp.data.api.NetworkConnectionInterceptor
 import com.poran.architecturecomponentsampleapp.data.db.AppDatabase
+import com.poran.architecturecomponentsampleapp.data.repository.QuoteRepository
 import com.poran.architecturecomponentsampleapp.data.repository.UserRepository
 import com.poran.architecturecomponentsampleapp.ui.auth.AuthViewModelFactory
 import com.poran.architecturecomponentsampleapp.ui.home.profile.ProfileViewModelFactory
+import com.poran.architecturecomponentsampleapp.ui.home.quotes.QuoteViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -32,11 +34,18 @@ class MVVMApplication :Application(),KodeinAware {
         bind<UserRepository>() with  singleton {
             UserRepository(instance(),instance())
         }
+
+        bind<QuoteRepository>() with singleton {
+            QuoteRepository(instance(),instance())
+        }
         bind() from provider {
             AuthViewModelFactory(instance())
         }
         bind() from provider {
             ProfileViewModelFactory(instance())
+        }
+        bind() from provider {
+            QuoteViewModelFactory(instance())
         }
     }
 }

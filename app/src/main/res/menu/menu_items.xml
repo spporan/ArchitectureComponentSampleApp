@@ -6,7 +6,7 @@
         />
     <item
         android:title="Quotes"
-        android:id="@+id/quotesFragment"
+        android:id="@+id/quoteFragment"
         />
 
 

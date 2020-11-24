@@ -6,6 +6,7 @@ import com.poran.architecturecomponentsampleapp.data.api.NetworkConnectionInterc
 import com.poran.architecturecomponentsampleapp.data.db.AppDatabase
 import com.poran.architecturecomponentsampleapp.data.repository.QuoteRepository
 import com.poran.architecturecomponentsampleapp.data.repository.UserRepository
+import com.poran.architecturecomponentsampleapp.preferences.PreferenceProvider
 import com.poran.architecturecomponentsampleapp.ui.auth.AuthViewModelFactory
 import com.poran.architecturecomponentsampleapp.ui.home.profile.ProfileViewModelFactory
 import com.poran.architecturecomponentsampleapp.ui.home.quotes.QuoteViewModelFactory
@@ -34,9 +35,12 @@ class MVVMApplication :Application(),KodeinAware {
         bind<UserRepository>() with  singleton {
             UserRepository(instance(),instance())
         }
+        bind<PreferenceProvider>() with singleton {
+            PreferenceProvider(instance())
+        }
 
         bind<QuoteRepository>() with singleton {
-            QuoteRepository(instance(),instance())
+            QuoteRepository(instance(),instance(),instance())
         }
         bind() from provider {
             AuthViewModelFactory(instance())

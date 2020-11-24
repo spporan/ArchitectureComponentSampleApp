@@ -13,7 +13,7 @@ import com.poran.architecturecomponentsampleapp.data.db.entities.User
 interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-  suspend  fun insert(user:User):Long
+     suspend  fun insert(user:User):Long
 
     @Query("SELECT * FROM user WHERE uid= $CURRENT_UID")
     fun getUSer():LiveData<User>
